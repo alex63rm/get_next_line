@@ -1,0 +1,53 @@
+- Objetivo: aprender variables estáticas (se mantienen a lo largo de todo el programa)
+
+General:
+- Toda la memoria alocada en heap deberá liberarse adecuadamente cuando sea ne-
+cesario. No se permitirán leaks de memoria.
+Si el subject lo requiere, deberás entregar un Makefile que compilará tus archivos
+fuente al output requerido con las flags -Wall, -Werror y -Wextra, por supuesto
+tu Makefile no debe hacer relink.
+• Tu Makefile debe contener al menos las normas $(NAME), all, clean, fclean y
+re.
+
+Obligatoria:
+
+- Llamar a tu función get_next_line en un bucle te permitirá leer el contenido de
+un file descriptor línea a línea hasta el final.
+- Debe compilar con la flag -D BUFFER_SIZE=xx. Esta flag se utilizará
+para determinar el tamaño del buffer de las lecturas de tu get_next_line.
+- El programa se compilará de la siguiente forma:
+cc -Wall -Werror -Wextra -D BUFFER_SIZE=42 <archivos>.c.
+
+- Tu read deberá utilizar el BUFFER_SIZE definido durante la compilación para leer
+de un archivo o del stdin. Este parámetro se modificará durante la evaluación para
+las pruebas pertinentes.
+
+Notas
+- ¿Funciona correctamente tu get_next_line si el BUFFER_SIZE es 9999?
+¿Y si es 1? ¿Qué tal con 10000000? ¿Sabes por qué?
+
+- Deberás intentar leer lo menos posible cada vez que se llame a
+get_next_line. Si encuentras un salto de línea, deberás devolver
+la línea actual. No leas el archivo entero y luego proceses cada
+línea.
+
+- No entregues tus proyectos sin probarlos. Hay muchísimos casos que
+debes validar, búscalos todos.
+Intenta leer de un archivo, de una redirección, del stdin. ¿Qué hace
+tu programa si le mandas un salto de línea desde el stdout? ¿Qué hace
+con ctrl-D?
+
+-lseek no se permite. Debe leerse el archivo una única vez.
+
+- Consideramos que get_next_line tiene un comportamiento indefinido si, entre
+llamadas, el mismo fd cambia de archivo antes de terminar la lectura sobre el
+primer fd.
+
+- consideramos que get_next_line tiene un comportamiento indefinido
+si se lee un binario. Sin embargo, y si así lo deseas, puedes dar coherencia a este
+comportamiento.
+
+- Las variables globales están prohibidas
+
+- Importante: la línea devuelta debe incluir el ’\n’, excepto si has llegado al final del
+archivo y no hay ’\n’.
