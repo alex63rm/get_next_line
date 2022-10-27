@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:50:13 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/26 21:11:35 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/10/27 22:54:26 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,14 @@ comportamiento.
 • Importante: la línea devuelta debe incluir el ’\n’, excepto si has llegado al final del
 archivo y no hay ’\n’.
 */
-char *get_next_line(int fd)
+#include "get_next_line.h"
+
+char	*get_next_line(int fd)
 {
+	printf("fd is: %d\n", fd);
+	char *test = "hello";
+	
+	return(test);
 
 }
+

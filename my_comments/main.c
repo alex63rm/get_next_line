@@ -1,17 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/27 22:30:49 by alejarod         ###   ########.fr       */
+/*   Created: 2022/10/27 20:29:22 by alejarod          #+#    #+#             */
+/*   Updated: 2022/10/27 22:35:42 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<fcntl.h>	//library for open
-#include<unistd.h>  // library for close
-#include<stdio.h>	//for printf, remove before submitting
+#include "get_next_line.h"
 
-char	*get_next_line(int fd);
+ int	main(void)
+ {
+	int	fd;
+	fd = open("book.txt", O_RDONLY); // remove before submitting
+	if(fd == -1)
+	{
+		printf("fd result: %d\n", fd);
+		return(-1);
+	}
+	else
+	{
+		printf("fd result: %d\n", fd);
+		printf("%s", get_next_line(fd));
+		
+		close(fd);  // remove before submitting
+		return(0);
+	}
+ }
