@@ -51,3 +51,7 @@ comportamiento.
 
 - Importante: la línea devuelta debe incluir el ’\n’, excepto si has llegado al final del
 archivo y no hay ’\n’.
+
+compilar con la flag -D BUFFER_SIZE=xx
+
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=42 *.c && ./a.out
