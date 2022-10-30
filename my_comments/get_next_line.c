@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:50:13 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/29 16:56:37 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:33:28 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,82 +23,75 @@ archivo y no hay ’\n’.
 */
 #include "get_next_line.h"
 
+static char	*ft_updated_saved(char *saved, char *buf);
+int			ft_search_char(char *str, int c);
+char		*ft_read(int fd, char *buf, char *saved);
+char		*ft_cut_saved(char *saved);
+
 char	*get_next_line(int fd)
 {
-	ssize_t		read_size;
-	char		*buf;
+	printf("FT_GNL\n");
 	static char	*saved;
-	size_t		i;
-	
-	//1.2. Allocate memory in the heap for the characters read
-	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if(!buf)
-		return(NULL);
-	//1.1. read the fd, for which I need to allocate space for buf with malloc (1.2)
-	read_size = read(fd, buf, BUFFER_SIZE);
-	printf("read_size is: %zd\n", read_size);
-	if(read_size < 0)
-		return(NULL);
-	// 2.1. Add the buf read data to a static saved string
-	// 2.2. Save the return of strdup in saved
-	saved = ft_strdup(saved, buf);
-	printf("(saved) static var content: %s\n", saved);
-	// 3. Check if the buf read more than a line
-	i = 0;
-	while(saved[i] != '\0')
-	{
-		if(saved[i] == '\n')
-		{
-			//if there was a line, we can return it
-			//we need to save the rest to join it with the next buffer
-			
-			
-		}	
-		//if no \n we can print the whole line
-
-		if there is a null, it means the text is over (mem)
-
-		if there is a \n, just we need to return up to \n 
-		and then keep the rest (memchr) to join (strjoin) with the next
-		i++;
-	}
-	next_line = ft_memchr(buf, '\n', ft_strlen(buf));
-	if() */
-	//leer
-	
-	return(buf);
-	free(buf);
-}
-
-int read_size;
-
-read_size = 1;
-mientras(statica no encunetre salto de linea o mientras halla algo que leer)
-{
-	leemos y asignamos la cantidad de bytes leidos.(read_size = read)
-	if (read_size es cero o menos uno)
-	{
-		liberar buff
-		(si sigues teniendo leaks liberar el otro)
-		retornnar null
-	}
-	buff[read_size] == '\0';
-	actualizar la estatica añadiendo el nuevo contenido de buff
-}
-char	*get_next_line(int fd)
-{
-	static char	*save;
 	char		*buf;
-	
+	// check for errors in opening the file or if buffer_size is negative
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return(NULL);
+	// allocate memory for the read bytes
 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if(!buf)
 		return(NULL);
+	// the static variable keeps the read bytes
+	saved = ft_read(fd, buf, saved);
+	printf("saved is: %s\n", saved);
+	free(buf);
+	if (ft_search_char(saved, '\n') == 1)
+	{
+		ft_cut_saved(saved);
+/* 		cut_saved: retornar en malloc lo que haya hasta el primer \n
+		cortar de saved el resto y guardarlo para unirlo hasta el siguiente salto de linea
+		borrar  */
+	}
+	return(saved);
+}
+/* char	*ft_join_line()
+{
 	
-	save = ft_read(fd, buf, BUFFER_SIZE, 1);
+}
+ */
+
+// return the first line, up to the first \n
+char	*ft_cut_saved(char *saved)
+{
+	char		*cut_saved;
+	size_t		i;
+	size_t		j;
+
+	// calculate lenght of cut_saved
+	i = 0;
+	while (saved[i] != '\n')
+		i++;
+	printf("size of first line: %zu\n", i);
+	// allocate memory for cut_saved
+	cut_saved = (char *)malloc((sizeof(char) * i) + 1);
+	if (!cut_saved)
+		return (NULL);
+	// write to cut_saved
+	j = 0;
+	while (saved[j] != '\n')
+	{
+		cut_saved[j] = saved[j];
+		j++;
+	}
+	cut_saved[j] = '\0';
+	printf("cut saved: %s\n", cut_saved);
+	return (cut_saved);
 }
 
+
+// check if there is a \n in a string
 int	ft_search_char(char *str, int c)
 {
+	printf("FT_SEARCH_CHAR\n");
 	int	i;
 
 	i = -1;
@@ -112,16 +105,57 @@ int	ft_search_char(char *str, int c)
 	return (0);
 }
 
-char *ft_read(int fd, char *buf, int buffer_size, ssize_t read_size)
+// CASE: 
+char	*ft_read(int fd, char *buf, char *saved)
 {	
-	//si no encuentra salto de linea en la estatica  o mientras halla algo que leer
-	while (ft_search_char(save, '\n') == 0 && read_size > 0)
+	printf("FT_READ\n");
+	ssize_t	read_size;
+	int		new_line_char;
+
+	new_line_char = ft_search_char(saved, '\n');
+	// while the buffer size is smaller than the line (i.e. no \n is found), keep reading and increase the size of the static
+	while (new_line_char == 0)
 	{
 		read_size = read(fd, buf, BUFFER_SIZE);
+		// -1 means error reading the file, 0 means there are no more bytes left to read
+		if(read_size <= 0)
+			break;
 		buf[read_size] = '\0';
+		// update the lenght of the static saved 
+		saved = ft_updated_saved(saved, buf);
 	}
+	// if the buffer size is big and contains new lines, save everything in the static
+	return (saved);
 }
-
-read_size = read(fd, buf, BUFFER_SIZE);
-
-
+// concatenate old static saved with the new bufer, creating a new save with malloc
+static char	*ft_updated_saved(char *saved, char *buf)
+{
+	printf("FT_UPDATED_SAVED\n");
+	char	*new_saved;
+	size_t	i;
+	size_t	j;
+	
+	i = 0;
+	j = 0;
+	// allocate memory to join old saved with the new buf (making saved bigger every time)
+	new_saved = (char *)malloc(sizeof(char) * (ft_strlen(saved) + ft_strlen(buf)) + 1);
+	if (!new_saved)
+		return (NULL);
+	// new saved = saved + buf
+	if (saved != NULL)
+	{
+		while (saved[i] != '\0')
+		{
+			new_saved[i] = saved[i];
+			i++;
+		}
+	}
+	while (buf[j] != '\0')
+	{
+		new_saved[i] = buf[j];
+		i++;
+		j++;
+	}
+	new_saved[i] = '\0';
+	return(new_saved);
+}

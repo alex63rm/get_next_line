@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/29 16:05:48 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:09:15 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ size_t	ft_strlen(char *str)
 	size_t	i;
 
 	i = 0;
+	if(!str)
+		return(0);
 	while(str[i] != '\0')
 		i++;
 	return(i);
@@ -41,7 +43,7 @@ char	*ft_strdup(char *dst, char *src)
 	return(dst);
 }
 
-void	*ft_memchr(const void*, int c, size_t n)
+/* void	*ft_strchr(const void*, int c)
 {
 	
-}
+} */

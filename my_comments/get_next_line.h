@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/29 16:06:16 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:39:53 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,3 @@
 char	*get_next_line(int fd);
 char	*ft_strdup(char *dest, char *src);
 size_t	ft_strlen(char *str);
-void	*ft_memchr(const void*, int c, size_t n);
