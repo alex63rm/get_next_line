@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:50:13 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/30 22:33:28 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/10/30 22:55:13 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,13 @@ char	*get_next_line(int fd)
 		return(NULL);
 	// the static variable keeps the read bytes
 	saved = ft_read(fd, buf, saved);
-	printf("saved is: %s\n", saved);
+	printf("saved before cutting is: %s\n", saved);
 	free(buf);
 	if (ft_search_char(saved, '\n') == 1)
 	{
 		ft_cut_saved(saved);
-/* 		cut_saved: retornar en malloc lo que haya hasta el primer \n
-		cortar de saved el resto y guardarlo para unirlo hasta el siguiente salto de linea
-		borrar  */
+/* 		//ya he cortado saved, ahora tengo que coger el resto de saved hasta el siguiente salto y unirlo hasta el siguiente salto, siguiente ronda.
+		borrar  el primer cacho de saved*/
 	}
 	return(saved);
 }
@@ -58,6 +57,13 @@ char	*get_next_line(int fd)
 	
 }
  */
+
+////////// seguir aqui	/////////////////
+
+
+// ya he cortado, ahora tengo que unir lo que haya en static con la siguiente lectura hasta que 
+
+
 
 // return the first line, up to the first \n
 char	*ft_cut_saved(char *saved)
@@ -105,16 +111,17 @@ int	ft_search_char(char *str, int c)
 	return (0);
 }
 
-// CASE: 
+// read from file and save it to the static variable
 char	*ft_read(int fd, char *buf, char *saved)
 {	
 	printf("FT_READ\n");
 	ssize_t	read_size;
 	int		new_line_char;
+	int		i = 0;
 
 	new_line_char = ft_search_char(saved, '\n');
-	// while the buffer size is smaller than the line (i.e. no \n is found), keep reading and increase the size of the static
-	while (new_line_char == 0)
+	// keep reading and increase the size of the static
+	while (new_line_char == 0)	// NO ENTIENDO EL MOTIVO DE ESTA CONDICION!!!!!!!!!!!!!!!!!!!
 	{
 		read_size = read(fd, buf, BUFFER_SIZE);
 		// -1 means error reading the file, 0 means there are no more bytes left to read
@@ -123,6 +130,7 @@ char	*ft_read(int fd, char *buf, char *saved)
 		buf[read_size] = '\0';
 		// update the lenght of the static saved 
 		saved = ft_updated_saved(saved, buf);
+		i++;
 	}
 	// if the buffer size is big and contains new lines, save everything in the static
 	return (saved);
