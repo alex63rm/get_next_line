@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/10/30 22:47:01 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:42:23 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 
 // it is a good practice to put it, in case it is not defined by the user. It is like the default value
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 10
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_strdup(char *dest, char *src);
+char	*ft_read_loop(int fd, char *buf, char *stash);
+char	*ft_strdup(char *src);
 size_t	ft_strlen(char *str);
+char	*ft_strjoin(char *dst, char *src);
+int		ft_search_char(char *str, int c);
