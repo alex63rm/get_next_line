@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/03 22:42:23 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:28:30 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,5 @@ char	*ft_strdup(char *src);
 size_t	ft_strlen(char *str);
 char	*ft_strjoin(char *dst, char *src);
 int		ft_search_char(char *str, int c);
+char	*ft_return_line(char *str, int c);
+char	*ft_strchr(char *str, int c);

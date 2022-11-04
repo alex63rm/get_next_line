@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/03 22:53:46 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/04 22:13:30 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*get_next_line(int fd)
 {
 	char		*buf;
 	static char	*stash;
-	
-	printf("fd is: %d\n", fd);
+
+	//printf("fd is: %d\n", fd);
 	if (fd < 0)
 		return (NULL);
 	// allocate
@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	//printf("buf before read is: %s\n", buf);
 	ft_read_loop(fd, buf, stash);
-	
+
 
 	return (buf);
 }
@@ -37,7 +37,7 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 	char	*aux;
 	ssize_t	read_size;
 	read_size = 1;
-	// keep reading the file
+	// keep reading the file. read_size is > 0 until the end
 	while (read_size > 0)
 	{
 		// load in buf the chars read from the file
@@ -49,21 +49,26 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 		if(!stash)
 			stash = ft_strdup(""); // alt: stash = NULL;
 		// printf("initialized stash is: %s\n", stash);
-		// to update the stash in the same place, I need to create an aux
+		// to update and add more bufs to the stash, I need to create an aux
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
-		// check for \n char in line
+		// check for \n char in line (if there is no \n continue reading)
 		if(ft_search_char(stash, '\n') == 1)
 		{
-			// CHECK THE LOGICS
-			// print_line
-			// save from \n to the stash.
+			// return the line
+			ft_return_line(stash, '\n');
+			// CONTINUE HERE: Check the next line char, it is not printing it
+			// get the rest of the stash and update stash value
+			ft_strchr(stash, '\n');
+			printf("next stash is %s\n", ft_strchr(stash, '\n'));
+			// update stash value
+			stash = ft_strchr(stash, '\n');
+
 			// continue the loop
-			printf("ENTERED");
-			printf("LINE PRINTED");
-			return(stash);
+			printf("loop stop");
+			return("OK");
 		}
-		
+
 	}
-	return ("read_loop_ok");
+	return ("read_loop_finished");
 }

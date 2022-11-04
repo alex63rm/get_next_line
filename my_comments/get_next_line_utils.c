@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/03 22:46:02 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/04 21:53:49 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	// allocate memory for the joined strings 
+	// allocate memory for the joined strings
 	ptr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	//printf("ptr malloc is %s\n", ptr);
 	if(!ptr)
@@ -75,11 +75,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	return(ptr);
 }
 
+// checks whether there is a character inside a string
 int	ft_search_char(char *str, int c)
 {
 	size_t	i;
 	i = 0;
-	
+
 /* 	if(!str)
 		return(NULL); */
 	while (str[i])
@@ -88,5 +89,49 @@ int	ft_search_char(char *str, int c)
 			return(1);
 		i++;
 	}
-	return (0);	
+	return (0);
+}
+// this function prints the line inside the stash up to the \n
+char	*ft_return_line(char *str, int c)
+{
+	char	*print;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if(!str)
+		return(NULL);
+	//calculate the length until the first \n
+	while (str[j] != c)
+		j++;
+	// allocate memory for the string to return
+	print = (char *)malloc(sizeof(char) * j + 1);
+	if(!print)
+		return(NULL);
+	// copy up to \n to a new string
+	while (str[i] != c)
+	{
+		print[i] = str[i];
+		i++;
+	}
+	//print[i] = '\0';
+	printf("ft_return_line result: %s\n", print);
+	return(print);
+}
+
+char	*ft_strchr(char *str, int c)
+{
+	size_t	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == c)
+			return(str + i);
+		i++;
+	}
+	if(c == '\0')
+		return(str + i);
+	return (NULL);
 }
