@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/04 22:13:30 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/05 15:13:34 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 		// load in buf the chars read from the file
 		read_size = read(fd, buf, BUFFER_SIZE);
 		printf("\nread_size is: %zd\n", read_size);
-		//printf("buf after read is: %s\n", buf);
+		// printf("buf after read is: %s\n", buf);
+		// end the buf with \0 to pass it as a string to strjoin
 		buf[read_size] = '\0';
+		// special case: we are near the EOF
+		if (read_size == 0)
+			break;
 		// stash is empty the first time, so we initialize it to null
 		if(!stash)
 			stash = ft_strdup(""); // alt: stash = NULL;
@@ -52,12 +56,20 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 		// to update and add more bufs to the stash, I need to create an aux
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
+		// SEGUIR AQUI, el next stash está teniendo un salto de linea y por eso 
+ 		if(read_size < BUFFER_SIZE)
+ 		{
+			// return stash until the end of the string
+			stash = stash + 1;
+			ft_return_line(stash, '\0');
+			printf("final line is %s\n", ft_return_line(stash, '\0'));
+			//return(stash);
+		}
 		// check for \n char in line (if there is no \n continue reading)
 		if(ft_search_char(stash, '\n') == 1)
 		{
 			// return the line
 			ft_return_line(stash, '\n');
-			// CONTINUE HERE: Check the next line char, it is not printing it
 			// get the rest of the stash and update stash value
 			ft_strchr(stash, '\n');
 			printf("next stash is %s\n", ft_strchr(stash, '\n'));
@@ -65,10 +77,13 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 			stash = ft_strchr(stash, '\n');
 
 			// continue the loop
-			printf("loop stop");
-			return("OK");
+			//printf("READ FINISHED\n");
+			//return("OK");
 		}
+		// check the final case, when we reach the EOF (end of file)
+
 
 	}
+	printf("finished reading loop\n");
 	return ("read_loop_finished");
 }

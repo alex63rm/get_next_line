@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/04 21:53:49 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/05 15:13:10 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	ptr[i + j] = '\0';
-	printf("stash value AFTER JOIN is: %s\n", ptr);
+	printf("stash AFTER strjoin: %s\n", ptr);
 	return(ptr);
 }
 
@@ -102,7 +102,7 @@ char	*ft_return_line(char *str, int c)
 	j = 0;
 	if(!str)
 		return(NULL);
-	//calculate the length until the first \n
+	// calculate the length of string until the first \n
 	while (str[j] != c)
 		j++;
 	// allocate memory for the string to return
@@ -115,11 +115,14 @@ char	*ft_return_line(char *str, int c)
 		print[i] = str[i];
 		i++;
 	}
-	//print[i] = '\0';
+	if (str[i] == c)
+		print[i] = str[i];
+	print[i] = '\0';
 	printf("ft_return_line result: %s\n", print);
 	return(print);
 }
 
+// copies the part of the stash after the \n
 char	*ft_strchr(char *str, int c)
 {
 	size_t	i;
@@ -128,10 +131,11 @@ char	*ft_strchr(char *str, int c)
 	while(str[i])
 	{
 		if (str[i] == c)
-			return(str + i);
+			// add 1 to the position in order to skip the first \n
+			return(str + (i + 1));
 		i++;
 	}
 	if(c == '\0')
-		return(str + i);
+		return(str + (i + 1));
 	return (NULL);
 }
