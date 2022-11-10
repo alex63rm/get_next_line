@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/10 19:38:32 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:56:08 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,25 @@ int	ft_search_char(char *str, int c)
 	}
 	return (0);
 }
+
+// copies the part of the stash after the \n
+char	*ft_strchr(char *str, int c)
+{
+	size_t	i;
+
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] == c)
+			return(str + i);
+		i++;
+	}
+	if(c == '\0')
+		return(str + i);
+	printf("stash for next call is %s", str);
+	return (NULL);
+}
+
 // this function prints the line inside the stash up to the \n
 char	*ft_return_line(char *str, int c)
 {
@@ -118,25 +137,16 @@ char	*ft_return_line(char *str, int c)
 	if (str[i] == c)
 		print[i] = str[i];
 	print[i] = '\0';
-	printf("ft_return_line result: %s\n", print);
+	printf("ft_return_line: %s\n", print);
 	return(print);
 }
 
-// copies the part of the stash after the \n
-char	*ft_strchr(char *str, int c)
+char	*ft_extact_line(char *str)
 {
 	size_t	i;
+	char 	*temp;
 
 	i = 0;
-	while(str[i])
-	{
-		if (str[i] == c)
-			// add 1 to the position in order to skip the first \n
-			// becasue strchr returns including the character found
-			return(str + i + 1);
-		i++;
-	}
-	if(c == '\0')
-		return(str + i + 1);
-	return (NULL);
+	//SEGUIR AQUI
+	while(line[i] != '\n')
 }
