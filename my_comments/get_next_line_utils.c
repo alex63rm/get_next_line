@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/10 21:56:08 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:46:03 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,13 +140,18 @@ char	*ft_return_line(char *str, int c)
 	printf("ft_return_line: %s\n", print);
 	return(print);
 }
-
-char	*ft_extact_line(char *str)
+/* // save the value after the \n
+char	*ft_next_stash(char *str)
 {
 	size_t	i;
-	char 	*temp;
+	char 	*next_stash;
 
 	i = 0;
-	//SEGUIR AQUI
-	while(line[i] != '\n')
-}
+	// reach the position of the \n
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\0')
+		return (0);
+	next_stash = ft_substr
+
+} */

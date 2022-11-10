@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/10 21:56:02 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:49:05 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ char	*get_next_line(int fd)
 		free (stash);
 		return (0);
 	}
+
+	// *** MI VERSION *** si no funciona, seguir con johnh ft_extract_line)
 	// update the stash for the next function call
 	// SEGUIR AQUI
-	stash = ft_extract_line(line);
+	stash = ft_strchr(line, '\n');
 	// return the line
 	return (line);
 }
@@ -68,6 +70,7 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
 		// stop the loop if there is a \n or a \0 (end of file)
+		//another option: if (ft_strchr(buf, '\n', if it returns sth it means it found the char, otherwise return null))
 		if (ft_search_char(stash, '\n') == 1 || ft_search_char(stash, '\0'))
 			break;
 	}
