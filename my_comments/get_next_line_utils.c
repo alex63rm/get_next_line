@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/05 15:13:10 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:38:32 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,11 @@ char	*ft_strchr(char *str, int c)
 	{
 		if (str[i] == c)
 			// add 1 to the position in order to skip the first \n
-			return(str + (i + 1));
+			// becasue strchr returns including the character found
+			return(str + i + 1);
 		i++;
 	}
 	if(c == '\0')
-		return(str + (i + 1));
+		return(str + i + 1);
 	return (NULL);
 }
