@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/10 23:49:05 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/10 23:52:00 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 {
 	char	*aux;
 	ssize_t	read_size;
-	// ititialize to 1 to enter the loo the first time
+	// ititialize to 1 to enter the loop the first time
 	read_size = 1;
 	// keep reading the file. read_size is > 0 until the end
 	while (read_size > 0)
