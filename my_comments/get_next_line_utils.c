@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/10 23:46:03 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/11 20:32:22 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	*ft_return_line(char *str, int c)
 	printf("ft_return_line: %s\n", print);
 	return(print);
 }
-/* // save the value after the \n
+/* // EXTRACT LINE save the value after the \n
 char	*ft_next_stash(char *str)
 {
 	size_t	i;
@@ -152,6 +152,33 @@ char	*ft_next_stash(char *str)
 		i++;
 	if (str[i] == '\0')
 		return (0);
-	next_stash = ft_substr
+	next_stash = ft_substr(str, i + 1, ft_strlen(str) - i);
+	if (!next_stash)
+		next_stash == NULL;
+	str[i + 1] = '\0';
+	return(next_stash);
 
 } */
+
+char	*ft_substr(char *str, unsigned int start, size_t len)
+{
+	char	*ptr;
+	// counter of the substr
+	size_t	i;
+
+	if (start > ft_strlen(str))
+		return(ft_strdup(""));
+	if (len > ft_strlen(str))
+		len = ft_strlen(str);
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!ptr)
+		return (NULL);
+	while (str[start] && i < len)
+	{
+		ptr[i] = str[start];
+		start++;
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
