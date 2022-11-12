@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 13:31:58 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 15:06:48 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_read_loop(int fd, char *buf, char *stash);
 char	*ft_strdup(char *src);
 size_t	ft_strlen(char *str);
 char	*ft_strjoin(char *dst, char *src);
-int		ft_search_char(char *str, int c);
-char	*ft_return_line(char *str, int c);
+// int		ft_search_char(char *str, int c);
 char	*ft_strchr(char *str, int c);
 char	*ft_substr(char *str, unsigned int start, size_t len);
+char	*ft_next_stash(char *str);

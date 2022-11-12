@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 20:29:22 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/04 22:01:37 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 15:07:30 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@
 	fd = open("book.txt", O_RDONLY); // with this function we open the file
 	if(fd == -1)
 	{
-		printf("Error opening, fd: %d\n", fd);
 		return(-1);
 	}
 	else
 	{
-		printf("Open OK, fd: %d\n", fd);
 		get_next_line(fd);
 		close(fd);  // we close the file after using it
 		return(0);

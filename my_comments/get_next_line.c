@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 14:37:44 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:44:53 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
 		// free (aux);
-		// stop the loop if there is a \n or a \0 (end of file)
+		/* by definition it returns a pointer if it finds the char or '\0'.
+		Otherwise it returns NULL and the loop continues. */
 		if (ft_strchr(buf, '\n'))
 			break;
 	}
