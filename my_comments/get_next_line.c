@@ -6,40 +6,13 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 14:44:53 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:05:18 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-// read the file
-char	*get_next_line(int fd)
-{
-	char		*line;
-	char		*buf;
-	static char	*stash;
-
-	//printf("fd is: %d\n", fd);
-	if (fd < 0)
-		return (0);
-	// allocate space for the read buf
-	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buf)
-		return (0);
-	// return the line that we read (it includes before and after the \n).
-	// but returns the whole buffer, it does not cut it yet
-	line = ft_read_loop(fd, buf, stash);
-	if (!line)
-	{
-		//free (stash);
-		return (0);
-	}
-	// assign the part of the line after the \n to the next stash.
-	stash = ft_next_stash(line);
-	return (line);
-}
-
-char	*ft_read_loop(int fd, char *buf, char *stash)
+static char	*ft_read_loop(int fd, char *stash, char *buf)
 {
 	char	*aux;
 	ssize_t	read_size;
@@ -63,7 +36,8 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 		// to update and add more bufs to the stash, I need to create an aux
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
-		// free (aux);
+		free (aux);
+		aux = NULL;
 		/* by definition it returns a pointer if it finds the char or '\0'.
 		Otherwise it returns NULL and the loop continues. */
 		if (ft_strchr(buf, '\n'))
@@ -72,23 +46,56 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 	return (stash);
 }
 
-// Saves the value after the \n in the static
-char	*ft_next_stash(char *str)
+// Extract the line
+static char	*ft_next_stash(char *line)
 {
 	size_t	i;
-	char 	*next_stash;
+	char 	*stash;
 
 	i = 0;
 	// reach the position of the \n with i
-	while (str[i] && str[i] != '\n')
+	while (line[i] && line[i] != '\n')
 		i++;
-	if (str[i] == '\0')
+	if (line[i] == '\0')
 		return (0);
 	// i + i to skip the \n
-	next_stash = ft_substr(str, i + 1, ft_strlen(str) - i);
-	if (*next_stash == '\0')
-		next_stash = NULL;
+	stash = ft_substr(line, i + 1, ft_strlen(line) - i);
+	if (*stash == '\0')
+	{
+		free (stash);
+		stash = NULL;
+	}
 	// assign the null in i + 1 just in case we are at the end of line
-	str[i + 1] = '\0';
-	return(next_stash);
+	line[i + 1] = '\0';
+	return(stash);
+}
+
+// read the file
+char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*buf;
+	static char	*stash;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (0);
+	// allocate space for the read buf
+	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buf)
+		return (0);
+	// return the line that we read (loop until the \n that made break).
+	line = ft_read_loop(fd, stash, buf);
+	free (buf);
+	if (!line)
+	{
+		free (stash);
+		return (0);
+	}
+	// siempre que sobreescribamos el valor de un malloc, hay que liberar el antiguo.
+	// save the old stash to aux to be able to free it after
+	// value of stash updated after the \n
+	stash = ft_next_stash(line);
+	// return the first part of the line
+	
+	return (line);
 }
