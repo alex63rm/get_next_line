@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 19:05:18 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 19:24:50 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static char	*ft_read_loop(int fd, char *stash, char *buf)
 		if(!stash)
 			stash = ft_strdup("");
 		// to update and add more bufs to the stash, I need to create an aux
+		// whenever we reassign a malloc, we need to free the old memory pointer
+		// save the old stash to aux to be able to free it after
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
 		free (aux);
@@ -46,7 +48,7 @@ static char	*ft_read_loop(int fd, char *stash, char *buf)
 	return (stash);
 }
 
-// Extract the line
+// Extract the line after the \n
 static char	*ft_next_stash(char *line)
 {
 	size_t	i;
@@ -58,7 +60,7 @@ static char	*ft_next_stash(char *line)
 		i++;
 	if (line[i] == '\0')
 		return (0);
-	// i + i to skip the \n
+	// i + i to skip the \n, save the rest
 	stash = ft_substr(line, i + 1, ft_strlen(line) - i);
 	if (*stash == '\0')
 	{
@@ -91,11 +93,9 @@ char	*get_next_line(int fd)
 		free (stash);
 		return (0);
 	}
-	// siempre que sobreescribamos el valor de un malloc, hay que liberar el antiguo.
-	// save the old stash to aux to be able to free it after
 	// value of stash updated after the \n
 	stash = ft_next_stash(line);
 	// return the first part of the line
-	
+	// RETURN THE LINE UNTIL THE \n ??????????????????????????
 	return (line);
 }
