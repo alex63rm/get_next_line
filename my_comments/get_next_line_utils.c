@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/11 20:32:22 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 13:58:45 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,17 @@ char	*ft_strchr(char *str, int c)
 	while(str[i])
 	{
 		if (str[i] == c)
-			return(str + i);
+			return(str + i + 1);
 		i++;
 	}
 	if(c == '\0')
-		return(str + i);
+		return(str + i + 1);
 	printf("stash for next call is %s", str);
 	return (NULL);
 }
 
 // this function prints the line inside the stash up to the \n
-char	*ft_return_line(char *str, int c)
+/* char	*ft_return_line(char *str, int c)
 {
 	char	*print;
 	size_t	i;
@@ -139,26 +139,9 @@ char	*ft_return_line(char *str, int c)
 	print[i] = '\0';
 	printf("ft_return_line: %s\n", print);
 	return(print);
-}
-/* // EXTRACT LINE save the value after the \n
-char	*ft_next_stash(char *str)
-{
-	size_t	i;
-	char 	*next_stash;
-
-	i = 0;
-	// reach the position of the \n
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (str[i] == '\0')
-		return (0);
-	next_stash = ft_substr(str, i + 1, ft_strlen(str) - i);
-	if (!next_stash)
-		next_stash == NULL;
-	str[i + 1] = '\0';
-	return(next_stash);
-
 } */
+
+
 
 char	*ft_substr(char *str, unsigned int start, size_t len)
 {
@@ -166,6 +149,7 @@ char	*ft_substr(char *str, unsigned int start, size_t len)
 	// counter of the substr
 	size_t	i;
 
+	i = 0;
 	if (start > ft_strlen(str))
 		return(ft_strdup(""));
 	if (len > ft_strlen(str))

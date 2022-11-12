@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/10 23:52:00 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:37:44 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,21 @@ char	*get_next_line(int fd)
 
 	//printf("fd is: %d\n", fd);
 	if (fd < 0)
-		return (NULL);
-	// allocate
+		return (0);
+	// allocate space for the read buf
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buf)
-		return (NULL);
-	//printf("buf before read is: %s\n", buf);
-	// print the line that we read. Stopped reading at \n or '\0'.
+		return (0);
+	// return the line that we read (it includes before and after the \n).
+	// but returns the whole buffer, it does not cut it yet
 	line = ft_read_loop(fd, buf, stash);
 	if (!line)
 	{
-		free (stash);
+		//free (stash);
 		return (0);
 	}
-
-	// *** MI VERSION *** si no funciona, seguir con johnh ft_extract_line)
-	// update the stash for the next function call
-	// SEGUIR AQUI
-	stash = ft_strchr(line, '\n');
-	// return the line
+	// assign the part of the line after the \n to the next stash.
+	stash = ft_next_stash(line);
 	return (line);
 }
 
@@ -54,7 +50,6 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 	{
 		// load in buf the chars read from the file
 		read_size = read(fd, buf, BUFFER_SIZE);
-		printf("read_size is: %zd\n", read_size);
 		if (read_size == -1)
 			return (0);
 		// special case: reached the EOF
@@ -62,17 +57,37 @@ char	*ft_read_loop(int fd, char *buf, char *stash)
 			break;
 		// end the buf with \0 to pass it as a string to strjoin
 		buf[read_size] = '\0';
-		// stash is empty the first time, so we initialize it to null
+		// stash is empty the first time, so we initialize it to null. Alt: stash = NULL.
 		if(!stash)
-			stash = ft_strdup(""); // alt: stash = NULL;
-		// printf("initialized stash is: %s\n", stash);
+			stash = ft_strdup("");
 		// to update and add more bufs to the stash, I need to create an aux
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
+		// free (aux);
 		// stop the loop if there is a \n or a \0 (end of file)
-		//another option: if (ft_strchr(buf, '\n', if it returns sth it means it found the char, otherwise return null))
-		if (ft_search_char(stash, '\n') == 1 || ft_search_char(stash, '\0'))
+		if (ft_strchr(buf, '\n'))
 			break;
 	}
 	return (stash);
+}
+
+// Saves the value after the \n in the static
+char	*ft_next_stash(char *str)
+{
+	size_t	i;
+	char 	*next_stash;
+
+	i = 0;
+	// reach the position of the \n with i
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\0')
+		return (0);
+	// i + i to skip the \n
+	next_stash = ft_substr(str, i + 1, ft_strlen(str) - i);
+	if (*next_stash == '\0')
+		next_stash = NULL;
+	// assign the null in i + 1 just in case we are at the end of line
+	str[i + 1] = '\0';
+	return(next_stash);
 }
