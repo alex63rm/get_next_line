@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 19:24:50 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:38:48 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ static char	*ft_read_loop(int fd, char *stash, char *buf)
 		// special case: reached the EOF
 		if (read_size == 0)
 			break;
-		// end the buf with \0 to pass it as a string to strjoin
-		buf[read_size] = '\0';
 		// stash is empty the first time, so we initialize it to null. Alt: stash = NULL.
 		if(!stash)
+			//stash = (char *)malloc(sizeof(char) * 1);
 			stash = ft_strdup("");
-		// to update and add more bufs to the stash, I need to create an aux
-		// whenever we reassign a malloc, we need to free the old memory pointer
-		// save the old stash to aux to be able to free it after
+		// the stash has a fixed size, so I cannot concatenate the buf.
+		// create an aux to copy stash (it is an address so I equal it), then join aux and buf
+		// luego stash = aux
+		// end the buf with \0 to pass it as a string to strjoin
+		buf[read_size] = '\0';
 		aux = stash;
 		stash = ft_strjoin(aux, buf);
 		free (aux);
@@ -48,12 +49,11 @@ static char	*ft_read_loop(int fd, char *stash, char *buf)
 	return (stash);
 }
 
-// Extract the line after the \n
+// Extract the line after the \n and save the lin
 static char	*ft_next_stash(char *line)
 {
 	size_t	i;
 	char 	*stash;
-
 	i = 0;
 	// reach the position of the \n with i
 	while (line[i] && line[i] != '\n')
@@ -67,7 +67,8 @@ static char	*ft_next_stash(char *line)
 		free (stash);
 		stash = NULL;
 	}
-	// assign the null in i + 1 just in case we are at the end of line
+	// !!! "cut" the line just after the \n by placing a \0, 
+	// so that when we return it in get_next_line it is already cut 
 	line[i + 1] = '\0';
 	return(stash);
 }
@@ -91,11 +92,11 @@ char	*get_next_line(int fd)
 	if (!line)
 	{
 		free (stash);
+		stash = NULL;
 		return (0);
 	}
 	// value of stash updated after the \n
 	stash = ft_next_stash(line);
-	// return the first part of the line
-	// RETURN THE LINE UNTIL THE \n ??????????????????????????
+	// return the first part of the line (that we "cut" with line[i + 1] = '\0')
 	return (line);
 }

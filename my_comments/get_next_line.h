@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 19:14:42 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/13 20:15:35 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 // it is a good practice to put it, in case it is not defined by the user. It is like the default value
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 100
 # endif
 
 char	*get_next_line(int fd);

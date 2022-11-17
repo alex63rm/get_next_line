@@ -6,7 +6,7 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:49 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/12 15:07:11 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/13 21:55:43 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,11 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	ptr[i + j] = '\0';
+	// we free the old stash
+	//free(s1);
 	return(ptr);
 }
 
-// checks whether there is a character inside a string
-/* int	ft_search_char(char *str, int c)
-{
-	size_t	i;
-	i = 0;
-
-	while (str[i])
-	{
-		if(str[i] == c)
-			return(1);
-		i++;
-	}
-	return (0);
-} */
-
-// returns a string if it finds the char or NULL otherwise
 char	*ft_strchr(char *str, int c)
 {
 	size_t	i;
@@ -115,7 +101,7 @@ char	*ft_substr(char *str, unsigned int start, size_t len)
 		return (0);
 	i = 0;
 	if (start > ft_strlen(str))
-		return(ft_strdup(""));
+		return(NULL);
 	if (len > ft_strlen(str))
 		len = ft_strlen(str);
 	ptr = (char *)malloc(sizeof(char) * (len + 1));
