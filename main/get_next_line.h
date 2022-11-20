@@ -6,14 +6,13 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 20:51:45 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/17 20:48:15 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/20 12:37:23 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include<fcntl.h>
 # include<unistd.h>
 # include<stdlib.h>
 
