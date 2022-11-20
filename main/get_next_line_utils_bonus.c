@@ -6,11 +6,11 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 12:50:21 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/20 12:54:46 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/20 12:55:38 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h" 
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(char *str)
 {

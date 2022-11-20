@@ -6,11 +6,11 @@
 /*   By: alejarod <alejarod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 19:30:17 by alejarod          #+#    #+#             */
-/*   Updated: 2022/11/20 12:54:50 by alejarod         ###   ########.fr       */
+/*   Updated: 2022/11/20 12:55:42 by alejarod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h" 
+#include "get_next_line.h"
 
 static char	*ft_read_loop(int fd, char *stash, char *buf)
 {
